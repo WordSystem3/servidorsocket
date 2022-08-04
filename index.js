@@ -24,7 +24,7 @@ io.on("connection", function (socket) {
   });
 });
 
-app.get('/pagar', (req, res) => {
+app.post('/pagar', (req, res) => {
   const { txid, valor } = req.body;
 
   mudarStatus(txid, valor);
