@@ -39,7 +39,7 @@ async function mudarStatus(txid, valor) {
   };
 
   try {
-    await axios.post('http://localhost/apis_centeringressos/apis6/clientes/pagamentos/pix/mudarstatus.php', obj).then((r) => {
+    await axios.post('http://centeringressos.com.br/sistema/apis_centeringressos/apis6/clientes/pagamentos/pix/mudarstatus.php', obj).then((r) => {
       console.debug(r.data);
       io.sockets.in(r.data.id_ingresso).emit('pagamento', r.data);
     })
