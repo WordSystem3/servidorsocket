@@ -25,25 +25,11 @@ io.on("connection", function (socket) {
 });
 
 app.post('/pagar', (req, res) => {
-  const { txid, valor } = req.body;
+  const { data } = req.body;
 
-  mudarStatus(txid, valor);
+  console.debug(req.body);
+
+  io.sockets.in(data.id_ingresso).emit('pagamento', data);
 
   res.send('Pronto.');
 });
-
-async function mudarStatus(txid, valor) {
-  const obj = {
-    txid,
-    valor,
-  };
-
-  try {
-    await axios.post('http://centeringressos.com.br/sistema/apis_centeringressos/apis6/clientes/pagamentos/pix/mudarstatus.php', obj).then((r) => {
-      console.debug(r.data);
-      io.sockets.in(r.data.id_ingresso).emit('pagamento', r.data);
-    })
-  } catch (error) {
-    console.error(error)
-  }
-}
