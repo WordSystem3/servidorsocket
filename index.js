@@ -6,7 +6,7 @@ const app = express();
 
 app.use(express.json());
 
-const server = app.listen(5670, () => {
+const server = app.listen(4662, () => {
   console.log("Servidor iniciado!");
 });
 
