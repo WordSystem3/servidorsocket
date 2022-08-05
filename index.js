@@ -28,7 +28,7 @@ app.post('/pagar', (req, res) => {
 
   console.debug(req.body);
 
-  io.sockets.in(id_ingresso).emit('pagamento', data);
+  io.sockets.in(id_ingresso).emit('pagamento', req.body);
 
   res.send('Pronto.');
 });
