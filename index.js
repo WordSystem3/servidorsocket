@@ -1,6 +1,6 @@
 const express = require("express");
+const cors = require("cors");
 const socket = require("socket.io");
-const axios = require("axios");
 
 const app = express();
 
@@ -17,19 +17,16 @@ io.on("connection", function (socket) {
   console.debug(socket.id);
 
   // EMITIR UMA MENSAGEM PARA O CLIENTE
-  socket.on('room', function (room) {
-    socket.join(room);
-    io.emit('conectouAoRoom', `Olá, ${socket.id} Você conectou ao SOCKET`);
+  io.emit('connected', `Olá, ${socket.id}`)
 
+  // QUANDO O CLIENTE SE DESCONECTAR
+  socket.on('disconnect', (reason) => {
+    console.debug(reason);
   });
 });
 
-app.post('/pagar', (req, res) => {
-  const { data } = req.body;
-
-  console.debug(req.body);
-
-  io.sockets.in(data.id_ingresso).emit('pagamento', data);
-
-  res.send('Pronto.');
+app.get('/teste', (req, res) => {
+  io.emit('connected', 'Testando');
+  
+  res.send('Enviou informações para o cliente');
 });
